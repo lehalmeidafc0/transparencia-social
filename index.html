@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Transparência Social: portal onde ONGs publicam seus documentos e qualquer pessoa consulta como elas funcionam e usam seus recursos. Projeto de alunas de Ciências Contábeis do Senac.">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<title>Transparência Social | Portal de documentos de ONGs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="Transparência Social, página inicial">
+      <svg viewBox="0 0 60 58" aria-hidden="true" class="mark">
+        <rect x="6" y="9" width="27" height="38" rx="4" fill="#D63A2F" transform="rotate(-16 19 28)"/>
+        <rect x="14" y="6" width="27" height="38" rx="4" fill="#2D7DC0" transform="rotate(-6 27 25)"/>
+        <path d="M24 13a4 4 0 0 1 4-4h14l11 11v30a4 4 0 0 1-4 4H28a4 4 0 0 1-4-4Z" fill="#EDB02C"/>
+        <path d="M42 9v8a3 3 0 0 0 3 3h8Z" fill="#C98E12"/>
+        <path d="M31 36l5 5 10-11" fill="none" stroke="#2A2A2C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><b>Transparência Social</b><small>Portal de documentos de ONGs</small></span>
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="main" id="nav" aria-label="Principal">
+      <ul>
+        <li><a href="#home" data-link="home">Início</a></li>
+        <li><a href="#documentos" data-link="documentos">Documentos</a></li>
+        <li><a href="#integrantes" data-link="integrantes">Integrantes</a></li>
+        <li><a href="#contato" data-link="contato">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<div class="page" id="page-home">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rise">
+        <h1>Transparência Social</h1>
+        <p class="lead">Um portal onde ONGs publicam seus documentos e qualquer pessoa consulta como elas funcionam e usam seus recursos.</p>
+        <div class="btns">
+          <a class="btn primary" href="#documentos">Consultar documentos</a>
+          <a class="btn ghost" href="#publicar">Publicar documentos</a>
+        </div>
+        <p class="stat" id="heroStat"></p>
+      </div>
+      <div class="hero-figures" id="heroFigures" aria-label="Quantidade de documentos por categoria"></div>
+    </div>
+  </section>
+
+  <section class="block soft">
+    <div class="wrap">
+      <h2>O que você encontra aqui</h2>
+      <p class="lead" style="margin-top:12px">Os documentos de todas as ONGs ficam organizados nas mesmas categorias. Cada categoria tem uma cor, que se repete na página de documentos.</p>
+      <div class="cats" id="homeCats"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <h2>Como uma ONG publica seus documentos</h2>
+      <ol class="steps">
+        <li><b>Revise o documento</b><p>Retire dados pessoais, dados bancários e qualquer outra informação sensível antes de publicar.</p></li>
+        <li><b>Envie pelo portal</b><p>Publique o arquivo no Google Drive ou no site da ONG e, na página de documentos, envie para a equipe o nome da ONG, a categoria e o link.</p></li>
+        <li><b>Pronto para consulta</b><p>Depois da revisão, o documento passa a aparecer na busca, junto com os de outras ONGs, para doadores, parceiros e a comunidade.</p></li>
+      </ol>
+      <a class="btn primary" href="#publicar">Publicar documentos</a>
+    </div>
+  </section>
+
+  <section class="block soft">
+    <div class="wrap two">
+      <div>
+        <h2>Transparência com responsabilidade</h2>
+        <p class="lead" style="margin-top:14px">Ser transparente não significa publicar tudo. Cada ONG avalia o que pode ser divulgado e retira as informações sensíveis antes de enviar.</p>
+        <p>O objetivo é equilibrar duas coisas: dar acesso claro à prestação de contas e proteger a privacidade e a segurança das pessoas envolvidas.</p>
+      </div>
+      <ul class="checks">
+        <li><b>Publicado</b>Documentos institucionais, termos de parceria, balanços, relatórios e certificados.</li>
+        <li><b>Publicado</b>Informações sobre a origem e o uso dos recursos de cada organização.</li>
+        <li class="hide"><b>Protegido</b>Dados pessoais de crianças, famílias, funcionários e voluntários.</li>
+        <li class="hide"><b>Protegido</b>Dados bancários e demais informações sensíveis, retirados antes da publicação.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap two">
+      <div>
+        <h2>Sobre o projeto</h2>
+      </div>
+      <div>
+        <p>Quando as informações de uma ONG estão espalhadas, quem apoia não sabe onde procurar. O Transparência Social reúne esses documentos em um só lugar, facilita a prestação de contas e fortalece a confiança entre as organizações, os doadores e a comunidade.</p>
+        <p>O portal nasceu como proposta de intervenção para a Associação Cultural Filhos da Corrente, Ponto de Cultura de capoeira em São Paulo, e está aberto para que outras ONGs também publiquem seus documentos.</p>
+        <a class="btn ghost" href="https://filhosdacorrente.blogspot.com/" target="_blank" rel="noopener">Conhecer a Filhos da Corrente</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- DOCUMENTOS -->
+<div class="page" id="page-documentos">
+  <div class="wrap">
+    <div class="doc-head rise">
+      <h1>Documentos</h1>
+      <p class="lead">Documentos publicados pelas ONGs participantes. Busque pelo nome, escolha uma ONG ou filtre por categoria.</p>
+      <div class="tools">
+        <label class="search">
+          <span class="sr">Buscar documento</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input type="search" id="q" placeholder="Buscar, por exemplo: balanço, estatuto, certificado">
+        </label>
+        <label class="ong-filter"><span class="sr">Filtrar por ONG</span>
+          <select id="ongSel"><option value="">Todas as ONGs</option></select>
+        </label>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por categoria"></div>
+      <p class="result-count" id="count" aria-live="polite"></p>
+    </div>
+    <div id="docGroups"></div>
+    <datalist id="ongList"></datalist>
+
+    <section class="ongs" id="publicar">
+      <div class="ongs-intro">
+        <div>
+          <h2>Publique os documentos da sua ONG</h2>
+          <p class="lead">Qualquer ONG pode usar o portal. Preencha os dados e o link do documento: a mensagem vai para a equipe, que revisa e adiciona o documento à lista, na categoria escolhida.</p>
+          <p>Antes de enviar, retire do arquivo dados pessoais, informações bancárias e qualquer outro conteúdo sensível. Depois publique o arquivo no Google Drive, no site da ONG ou em outro serviço, com acesso liberado para qualquer pessoa com o link. Use sempre o mesmo nome da ONG para que todos os documentos fiquem juntos.</p>
+        </div>
+        <div id="ongFormWrap">
+          <form class="contact" id="ongForm" novalidate>
+            <label for="o-ong">Nome da ONG</label>
+            <input id="o-ong" maxlength="120" list="ongList" autocomplete="organization" required>
+            <div class="row">
+              <div>
+                <label for="o-cat">Categoria</label>
+                <select id="o-cat"></select>
+              </div>
+              <div>
+                <label for="o-title">Nome do documento</label>
+                <input id="o-title" maxlength="120" placeholder="Ex.: Balanço 2024" required>
+              </div>
+            </div>
+            <label for="o-desc">Descrição curta</label>
+            <input id="o-desc" maxlength="160" placeholder="Ex.: Balanço patrimonial do exercício de 2024">
+            <div id="pane-link">
+              <label for="o-url">Link do documento</label>
+              <input id="o-url" type="url" placeholder="https://">
+              <p class="hint">O link precisa começar com https:// e estar aberto para qualquer pessoa com o link.</p>
+            </div>
+            <label class="check"><input type="checkbox" id="o-ok"> <span>Confirmo que o documento não contém dados pessoais, bancários ou outras informações sensíveis.</span></label>
+            <button type="submit" id="o-btn">Enviar documento para a equipe</button>
+            <p class="form-msg" id="o-msg" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <div class="note"><b>Sobre a privacidade dos arquivos.</b> Cada ONG é responsável por revisar seus documentos antes de publicar. Se encontrar dados pessoais, bancários ou outra informação que não deveria estar visível, avise pela página de contato para que o documento seja retirado.</div>
+  </div>
+</div>
+
+<!-- INTEGRANTES -->
+<div class="page" id="page-integrantes">
+  <section class="block">
+    <div class="wrap">
+      <div class="rise">
+        <h1>Integrantes</h1>
+        <p class="lead" style="margin-top:14px">Alunas do curso de Ciências Contábeis do Senac responsáveis pela proposta de intervenção Transparência Social.</p>
+      </div>
+      <div class="members" id="members"></div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTATO -->
+<div class="page" id="page-contato">
+  <section class="block">
+    <div class="wrap">
+      <div class="rise">
+        <h1>Contato</h1>
+        <p class="lead" style="margin-top:14px">Quer incluir sua ONG, tem dúvidas sobre algum documento ou encontrou uma informação sensível publicada? Fale com a equipe.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="info">
+          <h2 class="info-h">Senac Nações Unidas</h2>
+          <p class="info-sub">O Transparência Social foi desenvolvido por alunas do curso de Ciências Contábeis do Senac.</p>
+          <dl>
+            <dt>Endereço</dt>
+            <dd>Av. Engenheiro Eusébio Stevaux, 823, Santo Amaro<br>São Paulo, SP, 04696-000<br>Estação mais próxima: Jurubatuba (trem)<br>
+              <a href="https://www.google.com.br/maps/place/Senac+Na%C3%A7%C3%B5es+Unidas/@-23.670142,-46.7032242,17z" target="_blank" rel="noopener">Ver no mapa</a></dd>
+            <dt>Atendimento</dt>
+            <dd>Segunda a sexta, das 8h às 21h<br>Sábado, das 8h às 14h</dd>
+            <dt>E-mail da equipe</dt>
+            <dd><a href="mailto:mariaclaraosouzaz@gmail.com">mariaclaraosouzaz@gmail.com</a></dd>
+          </dl>
+          <div class="social">
+            <a href="https://www.instagram.com/senacnacoesunidas" target="_blank" rel="noopener">Instagram @senacnacoesunidas</a>
+            <a href="https://www.facebook.com/senacnacoes" target="_blank" rel="noopener">Facebook</a>
+            <a href="http://www1.sp.senac.br/hotsites/whatsapp/whats.html" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://www.sp.senac.br/senac-nacoes-unidas" target="_blank" rel="noopener">Site da unidade</a>
+          </div>
+        </div>
+        <form class="contact" id="contactForm" novalidate>
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" autocomplete="name" required>
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto">
+            <option>Quero incluir minha ONG no portal</option>
+            <option>Dúvida sobre um documento</option>
+            <option>Informação sensível publicada</option>
+            <option>Outro assunto</option>
+          </select>
+          <label for="msg">Mensagem</label>
+          <textarea id="msg" name="msg" required></textarea>
+          <button type="submit">Enviar por e-mail</button>
+          <p class="form-msg" id="formMsg" aria-live="polite">Ao enviar, seu aplicativo de e-mail abre com a mensagem pronta para a equipe.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer>
+  <div class="wrap f">
+    <div>
+      <div class="dots"><i style="background:#D63A2F"></i><i style="background:#2D7DC0"></i><i style="background:#EDB02C"></i></div>
+      <strong>Transparência Social</strong>, portal de documentos de ONGs<br>
+      Proposta de intervenção para a Associação Cultural Filhos da Corrente, desenvolvida por alunas de Ciências Contábeis do Senac
+    </div>
+    <div>
+      <a href="#documentos">Documentos</a> &nbsp; <a href="#publicar">Publicar</a> &nbsp; <a href="#integrantes">Integrantes</a> &nbsp; <a href="#contato">Contato</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
