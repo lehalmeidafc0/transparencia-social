@@ -1,4 +1,11 @@
-const BASE = "https://www.associacaocedap.org.br/wp-content/uploads/2022/09/";
+/* ===== Banco de dados do portal (Supabase) =====
+   Projeto: transparencia-social (Supabase > Project Settings > API Keys).
+   A chave "publishable" é pública e feita para ficar no site; nunca use aqui a chave "secret". */
+const SUPABASE_URL = "https://wyopdojnipyxfpyoqhag.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_gmyx0oKcbP9i6oMBKgLjqw_NJeUhgrv";
+const db = (SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const BUCKET = "documentos";
+
 const CATS = [
   {id:"inst", name:"Institucionais", color:"#2D7DC0", desc:"Estatuto, atas de eleição e certidões."},
   {id:"termos", name:"Termos de colaboração", color:"#EDB02C", desc:"Parcerias e convênios firmados com o poder público e outras instituições."},
@@ -6,39 +13,14 @@ const CATS = [
   {id:"rel", name:"Relatórios e certificados", color:"#5B6573", desc:"Certificações, registros em conselhos e relatórios de atividades."}
 ];
 const catById = Object.fromEntries(CATS.map(c=>[c.id,c]));
-const C = "CEDAP", F = "Filhos da Corrente";
+const F = "Filhos da Corrente";
+/* Documentos publicados. Para adicionar um novo, copie a linha abaixo e troque os dados:
+   [nome da ONG, categoria (inst | termos | balancos | rel), nome do documento, descrição, link] */
 const SEED = [
-  [F,"balancos","Balanço financeiro e DRE 2024","Balanço e demonstração de resultado","https://filhosdacorrente.blogspot.com/2025/09/balanco-financeiro-e-dre-2024.html"],
-  [C,"inst","Estatuto Social","Regras de funcionamento da associação","1-Estatuto-Social-CEDAP-novo.pdf"],
-  [C,"inst","Ata do mandato atual","Eleição e composição da diretoria","2-ATA-CEDAP-MANDATO-ATUAL.pdf"],
-  [C,"inst","CND Receita Federal","Certidão negativa de débitos federais","CND-receita-federal-cedap.pdf"],
-  [C,"termos","CEI Carolina","Termo de colaboração inicial","CAROLINA-TERMO-COLABORACAO-INICIAL.pdf"],
-  [C,"termos","CEI Eva Furnari","Termo de colaboração inicial","EVA-FURNARI-TERMO-DE-COLABORACAO-INICIAL.pdf"],
-  [C,"termos","CEI Sonho de Criança","Termo de colaboração inicial","SONHO-DE-CRIANCA-TERMO-COLABORACAO-INICIAL.pdf"],
-  [C,"termos","CEI Educar","Termo de colaboração","Termo-Colaboração-CEI-Educar.pdf"],
-  [C,"termos","CEI Espaço Brincar","Termo de colaboração","Termo-Colaboração-Cei-Espaço-Brincar.pdf"],
-  [C,"termos","CEI Sementinha","Termo de colaboração","Termo-de-Colaboraçã-Cei-Sementinha.pdf"],
-  [C,"termos","CEI Alecrim","Termo de colaboração","Termo-de-Colaboração-Cei-Alecrim.pdf"],
-  [C,"termos","CEI Abraçar","Termo de colaboração","Termo-de-Colaboração-Cei-Abraçar.pdf"],
-  [C,"termos","CEI Brincarte","Termo de colaboração","Termo-de-Colaboração-Cei-Brincarte.pdf"],
-  [C,"termos","CEI Cantinho Feliz","Termo de colaboração","Termo-de-Colaboração-Cei-Cantinho-Feliz.pdf"],
-  [C,"termos","CEI Chácara Jockey","Termo de colaboração","Termo-de-Colaboração-cei-Chacara-Jockey.pdf"],
-  [C,"termos","CEI Espaço da Criança II","Termo de colaboração","Termo-de-Colaboração-Cei-Espaço-II.pdf"],
-  [C,"termos","CEI Espaço da Criança III","Termo de colaboração","Termo-de-Colaboração-Cei-Espaço-III.pdf"],
-  [C,"termos","CEI Espaço da Criança IV","Termo de colaboração","Termo-de-Colaboração-Cei-Espaço-IV.pdf"],
-  [C,"termos","CEI Estação Alegria","Termo de colaboração","Termo-de-Colaboração-Cei-Estação-Alegria.pdf"],
-  [C,"balancos","Balanço 2020","Balanço patrimonial do exercício de 2020","BALANÇO-2020-CEDAP.pdf"],
-  [C,"balancos","Balanço 2019","Balanço patrimonial do exercício de 2019","BALANÇO-2019-CEDAP.pdf"],
-  [C,"balancos","Balanço 2018","Balanço e notas explicativas de 2018","BALANÇOS-E-NOTAS-2018.pdf"],
-  [C,"rel","Relatório sintético 2021 e 2022","Resumo das atividades do período","RelatorioSintetico-2021e-2022-CEDAP.doc-Documentos-Google.pdf"],
-  [C,"rel","Certificação CEBAS","Certificado de Entidade Beneficente de Assistência Social","CERTIFICAÇÃO-CEBAS-CEDAP.pdf"],
-  [C,"rel","Certificado CENTS 2022","Cadastro de entidades do terceiro setor","certificado-cents-2022.pdf"],
-  [C,"rel","Registro CMDCA","Conselho Municipal dos Direitos da Criança e do Adolescente","CMDCA.pdf"],
-  [C,"rel","CRCE","Certificado de regularidade cadastral de entidades","CRCE-CEDAP.pdf"],
-  [C,"rel","Diploma de Utilidade Pública","Prefeitura de São Paulo (SEI PMSP)","SEI_PMSP-059007894-Diploma-Utilidade-Pública.pdf"]
+  [F,"balancos","Balanço financeiro e DRE 2024","Balanço e demonstração de resultado do exercício","https://filhosdacorrente.blogspot.com/2025/09/balanco-financeiro-e-dre-2024.html"]
 ].map(([ong,cat,title,desc,file])=>{
   const web = file.startsWith("http");
-  return {ong,cat,title,desc,href:web?file:encodeURI(BASE+file),kind:web?"link":"pdf"};
+  return {ong,cat,title,desc,href:file,kind:/\.pdf($|\?)/i.test(file)?"pdf":"link"};
 });
 
 const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -46,7 +28,7 @@ const norm = s => String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").
 const plural = (n,a,b) => `${n} ${n===1?a:b}`;
 
 /* Estado */
-let shared = [], dbRef = null, assetsRef = null, myId = null, amOwner = false;
+let shared = [], dbRef = null, assetsRef = null, myId = null, amOwner = false, dbDocs = [];
 let active = "all";
 
 const sharedDocs = () => shared.filter(r => catById[r.cat] && r.ong && r.title).map(r => {
@@ -55,7 +37,7 @@ const sharedDocs = () => shared.filter(r => catById[r.cat] && r.ong && r.title).
   return {id:r.id, ong:String(r.ong).trim(), cat:r.cat, title:r.title, desc:r.desc||"", by:r.by, fileId:isFile?r.fileId:null,
     href: isFile ? "/_blob/"+r.fileId : (okUrl ? r.url : "#"), kind: isFile ? "file" : "link", shared:true, createdAt:r.createdAt||0};
 });
-const allDocs = () => sharedDocs().sort((a,b)=>b.createdAt-a.createdAt).concat(SEED);
+const allDocs = () => dbDocs.concat(SEED);
 const ongNames = () => [...new Set(allDocs().map(d=>d.ong))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
 
 /* Início */
@@ -99,9 +81,14 @@ function renderDocs(){
   const list = allDocs().filter(d=>(active==="all"||d.cat===active) && (!ong||d.ong===ong) &&
     (!q || norm(d.title+" "+d.desc+" "+d.ong+" "+catById[d.cat].name).includes(q)));
   document.getElementById("count").textContent = plural(list.length,"documento encontrado","documentos encontrados");
-  const out = CATS.map(c=>{
+  const order = [...CATS].sort((x,y)=>(list.some(d=>d.cat===y.id)?1:0)-(list.some(d=>d.cat===x.id)?1:0));
+  const out = order.map(c=>{
     const items = list.filter(d=>d.cat===c.id);
-    if(!items.length) return "";
+    const filtering = q || ong || active!=="all";
+    if(!items.length && (filtering && active!==c.id)) return "";
+    if(!items.length) return `<section class="doc-group" style="--c:${c.color}">
+      <div class="doc-group-head"><h2>${c.name}</h2><p>${c.desc}</p></div>
+      <p class="empty-cat">Nenhum documento publicado nesta categoria ainda. <a href="#publicar">Envie o da sua ONG</a>.</p></section>`;
     return `<section class="doc-group" style="--c:${c.color}">
       <div class="doc-group-head"><h2>${c.name}</h2><p>${c.desc}</p></div>
       <ul class="doc-list">${items.map(d=>`<li>
@@ -133,19 +120,72 @@ const form = document.getElementById("ongForm");
 function formUnavailable(){
   document.getElementById("ongFormWrap").innerHTML = `<div class="unavail">Para publicar documentos, a ONG precisa de acesso de colaborador ao portal. Peça o acesso pela página de <a href="#contato">contato</a>.</div>`;
 }
-form.addEventListener("submit", e => {
-  e.preventDefault();
+const fileIn = document.getElementById("o-file"), drop = form.querySelector(".drop");
+const mode = () => form.querySelector('input[name="Forma de envio"]:checked').value;
+const syncMode = () => {
+  document.getElementById("pane-link").hidden = mode()!=="link";
+  document.getElementById("pane-file").hidden = mode()!=="arquivo";
+};
+form.querySelectorAll('input[name="Forma de envio"]').forEach(r=>r.addEventListener("change",syncMode));
+const pick = f => {
+  const nm = document.getElementById("o-file-name");
+  if(!f){ nm.textContent = "Escolher arquivo do dispositivo"; drop.classList.remove("has"); return; }
+  nm.textContent = f.name + " (" + (f.size/1048576).toFixed(1).replace(".",",") + " MB)";
+  drop.classList.add("has");
+};
+fileIn.addEventListener("change",()=>pick(fileIn.files[0]));
+["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault(); drop.classList.add("over");}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,()=>drop.classList.remove("over")));
+drop.addEventListener("drop",e=>{ e.preventDefault(); const f=e.dataTransfer.files[0]; if(f){ const dt=new DataTransfer(); dt.items.add(f); fileIn.files=dt.files; pick(f);} });
+const OK_EXT = ["pdf","jpg","jpeg","png"];
+if(db){ const em=document.getElementById("o-email"); em.closest("form").querySelector('label[for="o-email"]').remove(); em.remove(); }
+form.addEventListener("submit", async e => {
   const g = id => document.getElementById(id), msg = g("o-msg");
   msg.className = "form-msg err";
-  const ong = g("o-ong").value.trim().replace(/\s+/g," "), title = g("o-title").value.trim(), url = g("o-url").value.trim();
-  if(!ong || !title){ msg.textContent = "Preencha o nome da ONG e o nome do documento."; return; }
-  if(!/^https:\/\/[^\s]+\.[^\s]+/.test(url)){ msg.textContent = "Cole um link válido que comece com https://."; return; }
-  if(!g("o-ok").checked){ msg.textContent = "Confirme que o documento não contém informações sensíveis."; return; }
-  const cat = catById[g("o-cat").value].name, desc = g("o-desc").value.trim();
-  const body = `ONG: ${ong}\nCategoria: ${cat}\nDocumento: ${title}\nDescrição: ${desc || "-"}\nLink: ${url}\n\nConfirmo que o documento não contém dados pessoais, bancários ou outras informações sensíveis.`;
-  window.location.href = `mailto:mariaclaraosouzaz@gmail.com?subject=${encodeURIComponent("[Transparência Social] Novo documento: "+ong)}&body=${encodeURIComponent(body)}`;
-  msg.className = "form-msg"; msg.textContent = "Seu aplicativo de e-mail abriu com os dados do documento. Envie a mensagem e a equipe adiciona o documento ao portal depois de revisar.";
+  const fail = t => { e.preventDefault(); msg.textContent = t; };
+  const ong = g("o-ong").value.trim(), title = g("o-title").value.trim();
+  if(!ong || !title) return fail("Preencha o nome da ONG e o nome do documento.");
+  if(!db && (!g("o-email").checkValidity() || !g("o-email").value.trim())) return fail("Informe um e-mail válido para a equipe responder.");
+  if(mode()==="arquivo"){
+    const f = fileIn.files[0];
+    if(!f) return fail("Escolha um arquivo do seu dispositivo.");
+    if(!OK_EXT.includes((f.name.split(".").pop()||"").toLowerCase())) return fail("Envie o arquivo em PDF, JPG ou PNG. Se for Word ou Excel, salve como PDF antes.");
+    if(f.size > 5*1048576) return fail("O arquivo passa de 5 MB. Reduza o tamanho ou envie um link.");
+    g("o-url").value = "";
+  } else {
+    if(!/^https:\/\/[^\s]+\.[^\s]+/.test(g("o-url").value.trim())) return fail("Cole um link válido que comece com https://.");
+    fileIn.value = "";
+  }
+  if(!g("o-ok").checked) return fail("Confirme que o documento não contém informações sensíveis.");
+  if(db){
+    e.preventDefault();
+    g("o-btn").disabled = true; msg.className = "form-msg"; msg.textContent = "Enviando…";
+    try {
+      let arquivo_path = null, link = null;
+      if(mode()==="arquivo"){
+        const f = fileIn.files[0], ext = f.name.split(".").pop().toLowerCase();
+        const slug = norm(ong).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,40) || "ong";
+        arquivo_path = `${slug}/${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
+        const up = await db.storage.from(BUCKET).upload(arquivo_path, f, {contentType: f.type || (ext==="pdf"?"application/pdf":"image/"+(ext==="jpg"?"jpeg":ext)), upsert:false});
+        if(up.error) throw up.error;
+      } else { link = g("o-url").value.trim(); }
+      const ins = await db.from("documentos").insert({ong, categoria:g("o-cat").value, titulo:title, descricao:g("o-desc").value.trim()||null, link, arquivo_path, confirmado:true});
+      if(ins.error) throw ins.error;
+      form.reset(); pick(null); syncMode(); g("o-ong").value = ong;
+      msg.className = "form-msg ok"; msg.textContent = "Documento publicado! Ele já aparece na lista de documentos.";
+      await loadDbDocs();
+    } catch(err){
+      console.error(err);
+      msg.className = "form-msg err"; msg.textContent = "Não foi possível enviar agora. Confira a conexão e tente de novo.";
+    } finally { g("o-btn").disabled = false; }
+    return;
+  }
+  g("o-subject").value = "[Transparência Social] Novo documento: " + ong;
+  g("o-cat-name").value = catById[g("o-cat").value].name;
+  msg.className = "form-msg"; msg.textContent = "Enviando…";
+  g("o-btn").disabled = true;
 });
+
 
 
 
@@ -179,20 +219,35 @@ document.getElementById("contactForm").addEventListener("submit",e=>{
   msg.className="form-msg"; msg.textContent="Mensagem preparada. Confira e envie pelo seu aplicativo de e-mail.";
 });
 
+
+/* Carrega os documentos enviados pelas ONGs */
+async function loadDbDocs(){
+  if(!db) return;
+  const { data, error } = await db.from("documentos").select("id,created_at,ong,categoria,titulo,descricao,link,arquivo_path").order("created_at",{ascending:false}).limit(500);
+  if(error){ console.error(error); return; }
+  dbDocs = data.filter(r=>catById[r.categoria]).map(r=>{
+    const href = r.arquivo_path ? db.storage.from(BUCKET).getPublicUrl(r.arquivo_path).data.publicUrl : (/^https:\/\//.test(r.link||"") ? r.link : "#");
+    return {ong:r.ong, cat:r.categoria, title:r.titulo, desc:r.descricao||"", href, kind: r.arquivo_path ? (/\.pdf$/i.test(r.arquivo_path)?"pdf":"file") : "link"};
+  });
+  renderAll();
+}
+
 /* Navegação */
 const pages = ["home","documentos","integrantes","contato"];
 const nav = document.getElementById("nav"), menuBtn = document.querySelector(".menu-btn");
 function route(){
   const h = location.hash.slice(1);
-  const p = h==="publicar" ? "documentos" : (pages.includes(h) ? h : "home");
+  const p = (h==="publicar"||h==="enviado") ? "documentos" : (pages.includes(h) ? h : "home");
   pages.forEach(x=>document.getElementById("page-"+x).classList.toggle("active",x===p));
   document.querySelectorAll("[data-link]").forEach(a=>{a.dataset.link===p?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
   if(p==="documentos") renderDocs();
   nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded","false");
-  if(h==="publicar") requestAnimationFrame(()=>document.getElementById("publicar").scrollIntoView());
+  if(h==="enviado"){ const m=document.getElementById("o-msg"); m.className="form-msg ok"; m.textContent="Documento enviado! A equipe vai revisar e publicar no portal em breve."; }
+  if(h==="publicar"||h==="enviado") requestAnimationFrame(()=>document.getElementById("publicar").scrollIntoView());
   else window.scrollTo(0,0);
 }
 menuBtn.onclick=()=>{const o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o)};
 window.addEventListener("hashchange",route);
 renderAll();
 route();
+loadDbDocs();
