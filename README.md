@@ -74,4 +74,16 @@ O site não aparece na busca do Google logo de cara. Para pedir que o Google o e
 
 ## Como funciona o envio de documentos
 
-O formulário **Publique os documentos da sua ONG** abre o e-mail de quem está enviando com uma mensagem pronta para a equipe, com o nome da ONG, a categoria, o nome do documento e o link. A equipe revisa o documento e, se estiver tudo certo, adiciona à lista `SEED` em `js/script.js`.
+O formulário **Publique os documentos da sua ONG** aceita um arquivo do dispositivo (PDF, JPG ou PNG, até 5 MB) ou um link.
+
+- **Com o Supabase configurado:** o arquivo vai para o armazenamento do portal e o documento aparece na lista na hora, sem passar por e-mail.
+- **Sem o Supabase:** o envio vai por e-mail para a equipe, pelo serviço FormSubmit.
+
+### Configurar o Supabase (uma vez só)
+
+1. Em [supabase.com](https://supabase.com), crie um projeto (plano gratuito).
+2. Abra **SQL Editor > New query**, cole o conteúdo de `supabase-setup.sql` e clique em **Run**.
+3. Em **Project Settings > API**, copie a **Project URL** e a chave **anon public**.
+4. Cole as duas no início de `js/script.js`, em `SUPABASE_URL` e `SUPABASE_ANON_KEY`. Nunca use a chave `service_role` no site.
+
+Para apagar um documento publicado por engano: **Table Editor > documentos**, apague a linha e, se houver arquivo, apague também em **Storage > documentos**.

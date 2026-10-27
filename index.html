@@ -132,13 +132,20 @@
       <div class="ongs-intro">
         <div>
           <h2>Publique os documentos da sua ONG</h2>
-          <p class="lead">Qualquer ONG pode usar o portal. Preencha os dados e o link do documento: a mensagem vai para a equipe, que revisa e adiciona o documento à lista, na categoria escolhida.</p>
-          <p>Antes de enviar, retire do arquivo dados pessoais, informações bancárias e qualquer outro conteúdo sensível. Depois publique o arquivo no Google Drive, no site da ONG ou em outro serviço, com acesso liberado para qualquer pessoa com o link. Use sempre o mesmo nome da ONG para que todos os documentos fiquem juntos.</p>
+          <p class="lead">Qualquer ONG pode usar o portal. Envie o documento direto do computador ou do celular, ou cole um link. A equipe revisa e adiciona o documento à lista, na categoria escolhida.</p>
+          <p>Antes de enviar, retire do arquivo dados pessoais, informações bancárias e qualquer outro conteúdo sensível. Use sempre o mesmo nome da ONG para que todos os documentos fiquem juntos.</p>
         </div>
         <div id="ongFormWrap">
-          <form class="contact" id="ongForm" novalidate>
+          <form class="contact" id="ongForm" action="https://formsubmit.co/mariaclaraosouzaz@gmail.com" method="POST" enctype="multipart/form-data" novalidate>
+            <input type="hidden" name="_subject" id="o-subject" value="[Transparência Social] Novo documento">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="https://lehalmeidafc0.github.io/transparencia-social/#enviado">
+            <input type="hidden" name="Categoria" id="o-cat-name" value="">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
             <label for="o-ong">Nome da ONG</label>
-            <input id="o-ong" maxlength="120" list="ongList" autocomplete="organization" required>
+            <input id="o-ong" name="ONG" maxlength="120" list="ongList" autocomplete="organization" required>
+            <label for="o-email">Seu e-mail</label>
+            <input id="o-email" name="email" type="email" maxlength="120" autocomplete="email" placeholder="para a equipe responder" required>
             <div class="row">
               <div>
                 <label for="o-cat">Categoria</label>
@@ -146,17 +153,32 @@
               </div>
               <div>
                 <label for="o-title">Nome do documento</label>
-                <input id="o-title" maxlength="120" placeholder="Ex.: Balanço 2024" required>
+                <input id="o-title" name="Documento" maxlength="120" placeholder="Ex.: Balanço 2024" required>
               </div>
             </div>
             <label for="o-desc">Descrição curta</label>
-            <input id="o-desc" maxlength="160" placeholder="Ex.: Balanço patrimonial do exercício de 2024">
-            <div id="pane-link">
+            <input id="o-desc" name="Descrição" maxlength="160" placeholder="Ex.: Balanço patrimonial do exercício de 2024">
+            <fieldset class="mode">
+              <legend>Como você quer enviar?</legend>
+              <div class="seg" role="radiogroup">
+                <label><input type="radio" name="Forma de envio" value="arquivo" checked> <span>Do dispositivo</span></label>
+                <label><input type="radio" name="Forma de envio" value="link"> <span>Por link</span></label>
+              </div>
+            </fieldset>
+            <div id="pane-file">
+              <label class="drop" for="o-file">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+                <span id="o-file-name">Escolher arquivo do dispositivo</span>
+                <small>PDF, JPG ou PNG, até 5 MB. No celular, dá para escolher da galeria ou dos arquivos.</small>
+              </label>
+              <input id="o-file" name="attachment" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" class="sr">
+            </div>
+            <div id="pane-link" hidden>
               <label for="o-url">Link do documento</label>
-              <input id="o-url" type="url" placeholder="https://">
+              <input id="o-url" name="Link" type="url" placeholder="https://">
               <p class="hint">O link precisa começar com https:// e estar aberto para qualquer pessoa com o link.</p>
             </div>
-            <label class="check"><input type="checkbox" id="o-ok"> <span>Confirmo que o documento não contém dados pessoais, bancários ou outras informações sensíveis.</span></label>
+            <label class="check"><input type="checkbox" id="o-ok" name="Confirmação" value="Sem dados sensíveis"> <span>Confirmo que o documento não contém dados pessoais, bancários ou outras informações sensíveis.</span></label>
             <button type="submit" id="o-btn">Enviar documento para a equipe</button>
             <p class="form-msg" id="o-msg" aria-live="polite"></p>
           </form>
@@ -244,6 +266,7 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>
