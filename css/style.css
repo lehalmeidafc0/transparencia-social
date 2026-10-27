@@ -229,3 +229,39 @@ form.contact .drop:hover,.drop.over{border-color:var(--blue)}
 .members{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:860px){.members{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.members{grid-template-columns:1fr}}
+
+.empty-cat{color:var(--muted);font-size:16px;padding:18px 4px;margin:0;border-bottom:1px solid var(--line)}
+.empty-cat a{font-weight:700}
+.form-msg.ok{color:#1F7A3A;font-weight:700}
+#o-btn:disabled{opacity:.6;cursor:wait}
+/* Telas pequenas */
+@media (max-width:560px){
+  body{font-size:17px}
+  .wrap{padding:0 18px}
+  section.block{padding:52px 0}
+  .hero{padding:40px 0 48px}
+  .btns .btn{flex:1 1 100%;text-align:center}
+  form.contact{padding:20px;border-radius:18px}
+  .doc-list li a{gap:12px;padding:14px 4px}
+  .doc-list .ic{width:38px;height:46px}
+  .seg span{padding:10px 4px;font-size:14px}
+  .steps{gap:20px}
+  .cats .cat{padding:20px 16px}
+}
+@media (max-width:360px){
+  .brand b{font-size:16px}
+  .brand svg{height:32px}
+  .menu-btn{padding:6px 10px}
+  h1{font-size:2rem}
+}
+@media (min-width:1600px){
+  .wrap{max-width:1280px}
+  body{font-size:19px}
+}
+.hero-grid > *{min-width:0}
+@media (max-width:380px){
+  .hero-figures{gap:6px}
+  .fig .head{width:28px;height:28px}
+  .fig .body{width:44px;font-size:17px}
+  .fig span.lbl{font-size:11px;max-width:62px}
+}
